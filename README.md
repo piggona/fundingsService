@@ -1,6 +1,6 @@
-*FundingsService: NSF Analyzing Tool as Service*
+# FundingsService: NSF Analyzing Tool as Service
 
-**Quick Start**
+## Quick Start
 
 1. `sysctl -w vm.max_map_count=262144` to make sure elasticsearch can start-up.
 2. configure mysql connection settings.
