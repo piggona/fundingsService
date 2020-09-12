@@ -3,7 +3,7 @@ package models
 import (
 	"testing"
 
-	"github.com/piggona/fundings_view/scheduler/utils/log"
+	"github.com/piggona/fundingsService/scheduler/utils/log"
 )
 
 func TestGetImportTask(t *testing.T) {

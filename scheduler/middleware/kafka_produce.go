@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/Shopify/sarama"
-	"github.com/piggona/fundings_view/scheduler/utils/log"
+	"github.com/piggona/fundingsService/scheduler/utils/log"
 	"go.opentelemetry.io/otel/api/global"
 	"go.opentelemetry.io/otel/api/kv"
 	"go.opentelemetry.io/otel/api/trace"

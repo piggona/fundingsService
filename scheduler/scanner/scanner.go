@@ -9,10 +9,10 @@ import (
 	"sync"
 
 	"github.com/astaxie/beego/orm"
-	"github.com/piggona/fundings_view/scheduler/crontask"
-	"github.com/piggona/fundings_view/scheduler/middleware"
-	"github.com/piggona/fundings_view/scheduler/models"
-	"github.com/piggona/fundings_view/scheduler/utils/log"
+	"github.com/piggona/fundingsService/scheduler/crontask"
+	"github.com/piggona/fundingsService/scheduler/middleware"
+	"github.com/piggona/fundingsService/scheduler/models"
+	"github.com/piggona/fundingsService/scheduler/utils/log"
 )
 
 var (

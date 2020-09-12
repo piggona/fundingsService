@@ -1,4 +1,4 @@
-module github.com/piggona/fundings_view/scheduler
+module github.com/piggona/fundingsService/scheduler
 
 go 1.14
 

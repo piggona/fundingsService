@@ -7,8 +7,8 @@ import (
 	"io/ioutil"
 	"testing"
 
-	"github.com/piggona/fundings_view/scheduler/middleware"
-	"github.com/piggona/fundings_view/scheduler/utils/log"
+	"github.com/piggona/fundingsService/scheduler/middleware"
+	"github.com/piggona/fundingsService/scheduler/utils/log"
 )
 
 func TestMain(m *testing.M) {
