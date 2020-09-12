@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rootTag>
+<Award>
+<AwardTitle>FET: Medium: Collaborative Research: Automated Analysis and Exploration of High-dimensional and Multimodal Molecular Energy Landscapes</AwardTitle>
+<AwardEffectiveDate>08/01/2019</AwardEffectiveDate>
+<AwardExpirationDate>07/31/2023</AwardExpirationDate>
+<AwardTotalIntnAmount>580000.00</AwardTotalIntnAmount>
+<AwardAmount>247648</AwardAmount>
+<AwardInstrument>
+<Value>Continuing Grant</Value>
+</AwardInstrument>
+<Organization>
+<Code>05010000</Code>
+<Directorate>
+<Abbreviation>CSE</Abbreviation>
+<LongName>Direct For Computer &amp; Info Scie &amp; Enginr</LongName>
+</Directorate>
+<Division>
+<Abbreviation>CCF</Abbreviation>
+<LongName>Division of Computing and Communication Foundations</LongName>
+</Division>
+</Organization>
+<ProgramOfficer>
+<SignBlockName>Mitra Basu</SignBlockName>
+</ProgramOfficer>
+<AbstractNarration>The activities in this project are inspired by central standing questions hampering our ability to understand cellular mechanisms at a molecular level. Decades of scientific inquiry have demonstrated that biological molecules are constantly on the move, assuming different forms and switching between them to interface with different molecular partners in the cell. Their motions can be conceptualized as hops in an energy landscape that organizes the vast space of forms assumed by a molecule by grouping together forms with similar energies into states. Molecular energy landscapes govern the underlying dynamics of a molecule and expose the relationship between form, changes to form, and function. This project brings together concepts and techniques from engineering, mathematics, and biology to advance algorithmic research on automated and efficient analysis and exploration of molecular energy landscapes. In particular, the proposed activities develop advanced, data-driven algorithms for automated detection and extraction of global and local structures of a landscape and utilization of such structures (and their characteristics) to advance the state of computation of molecular energy landscapes. This project benefits researchers of diverse sub-communities in computational and biological sciences. The project will also result in open-source codes, online teaching modules and tutorials, publicly-available data, workshops, software demos, and will provides excellent opportunities to train under-represented students at the interface of different disciplines and domains.&lt;br/&gt;&lt;br/&gt;The activities in this project support understanding of cellular mechanism at a molecular level and  advance the state of computation of molecular energy landscapes in support of such understanding. The project advances algorithmic research in exploratory landscape analysis in evolutionary computation, high-dimensional geometry and spatial statistics, and stochastic optimization to address fundamental challenges in automated, efficient analysis and exploration of high-dimensional and multimodal landscapes. The primary focus is on molecular energy landscapes that organize microstates of a molecular system, govern the underlying dynamics, and expose the relationship between form, changes to form, and function. The project puts forth data-driven techniques to uncover the underlying organization of global and local structures of a landscape and exploit such structures to formulate algorithmic design principles for effective computation of molecular energy landscapes via stochastic optimization. The proposed activities will make general contributions to evolutionary computation, stochastic optimization, spatial statistics, and high-dimensional geometry. In particular, the work will benefit researchers in these communities that have application-driven interests in molecular modeling and modeling of complex, dynamic systems. The research will be disseminated via various venues, including open-source codes in C++, Python, and R so as to reach diverse communities of researchers and students, online teaching modules, online tutorials, and publicly-available landscape-related data.  This interdisciplinary project creates excellent opportunities to train under-represented students of all backgrounds at the interface of optimization and search, geometry, statistics, and computational biology.&lt;br/&gt;&lt;br/&gt;This award reflects NSF's statutory mission and has been deemed worthy of support through evaluation using the Foundation's intellectual merit and broader impacts review criteria.</AbstractNarration>
+<MinAmdLetterDate>07/26/2019</MinAmdLetterDate>
+<MaxAmdLetterDate>08/01/2019</MaxAmdLetterDate>
+<ARRAAmount/>
+<AwardID>1900061</AwardID>
+<Investigator>
+<FirstName>Amarda</FirstName>
+<LastName>Shehu</LastName>
+<EmailAddress>ashehu@gmu.edu</EmailAddress>
+<StartDate>07/26/2019</StartDate>
+<EndDate>08/01/2019</EndDate>
+<RoleCode>Former Principal Investigator</RoleCode>
+</Investigator>
+<Investigator>
+<FirstName>Wanli</FirstName>
+<LastName>Qiao</LastName>
+<EmailAddress>wqiao@gmu.edu</EmailAddress>
+<StartDate>07/26/2019</StartDate>
+<EndDate>08/01/2019</EndDate>
+<RoleCode>Former Co-Principal Investigator</RoleCode>
+</Investigator>
+<Investigator>
+<FirstName>Wanli</FirstName>
+<LastName>Qiao</LastName>
+<EmailAddress>wqiao@gmu.edu</EmailAddress>
+<StartDate>08/01/2019</StartDate>
+<EndDate/>
+<RoleCode>Principal Investigator</RoleCode>
+</Investigator>
+<Institution>
+<Name>George Mason University</Name>
+<CityName>FAIRFAX</CityName>
+<ZipCode>220304422</ZipCode>
+<PhoneNumber>7039932295</PhoneNumber>
+<StreetAddress>4400 UNIVERSITY DR</StreetAddress>
+<CountryName>United States</CountryName>
+<StateName>Virginia</StateName>
+<StateCode>VA</StateCode>
+</Institution>
+<ProgramElement>
+<Code>089Y</Code>
+<Text>FET-Fndtns of Emerging Tech</Text>
+</ProgramElement>
+<ProgramReference>
+<Code>7924</Code>
+<Text>MEDIUM PROJECT</Text>
+</ProgramReference>
+<ProgramReference>
+<Code>7931</Code>
+<Text>COMPUTATIONAL BIOLOGY</Text>
+</ProgramReference>
+</Award>
+</rootTag>

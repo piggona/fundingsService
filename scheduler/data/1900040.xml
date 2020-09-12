@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rootTag>
+<Award>
+<AwardTitle>2019 Graduate Student Combinatorics Conference</AwardTitle>
+<AwardEffectiveDate>03/15/2019</AwardEffectiveDate>
+<AwardExpirationDate>02/29/2020</AwardExpirationDate>
+<AwardTotalIntnAmount>25000.00</AwardTotalIntnAmount>
+<AwardAmount>25000</AwardAmount>
+<AwardInstrument>
+<Value>Standard Grant</Value>
+</AwardInstrument>
+<Organization>
+<Code>03040000</Code>
+<Directorate>
+<Abbreviation>MPS</Abbreviation>
+<LongName>Direct For Mathematical &amp; Physical Scien</LongName>
+</Directorate>
+<Division>
+<Abbreviation>DMS</Abbreviation>
+<LongName>Division Of Mathematical Sciences</LongName>
+</Division>
+</Organization>
+<ProgramOfficer>
+<SignBlockName>Stefaan De Winter</SignBlockName>
+</ProgramOfficer>
+<AbstractNarration>The 2019 Graduate Student Combinatorics Conference will be jointly hosted by Drexel University and the University of Pennsylvania in Philadelphia from April 5-7, 2019. This is a conference hosted by graduate students for graduate students organized at various universities across the country since 2005. The goal of this event is to provide students in combinatorics valuable conference experience. For many participants this conference serves as an excellent opportunity to start giving research talks, and for all participants it serves as a chance to meet fellow students and future collaborators. In addition to contributed talks by student participants the conference includes invited speakers who are leading experts in various areas of combinatorics. &lt;br/&gt;&lt;br/&gt;This year's invited speakers are Sami Assaf, Jozsef Balogh, and Robin Pemantle. Assaf is a an expert in algebraic combinatorics, and also serves as a role model for young women in mathematics. Balogh is an authority in probabilistic combinatorics and its applications to (hyper)graph theory. Pemantle is well-known for his extensive work at the crossroads of discrete probability and combinatorics. More information can be found on the conference website at: https://sites.google.com/view/gscc2019/.&lt;br/&gt;&lt;br/&gt;This award reflects NSF's statutory mission and has been deemed worthy of support through evaluation using the Foundation's intellectual merit and broader impacts review criteria.</AbstractNarration>
+<MinAmdLetterDate>03/05/2019</MinAmdLetterDate>
+<MaxAmdLetterDate>03/05/2019</MaxAmdLetterDate>
+<ARRAAmount/>
+<AwardID>1900040</AwardID>
+<Investigator>
+<FirstName>George</FirstName>
+<LastName>Wang</LastName>
+<EmailAddress>wage@math.upenn.edu</EmailAddress>
+<StartDate>03/05/2019</StartDate>
+<EndDate/>
+<RoleCode>Principal Investigator</RoleCode>
+</Investigator>
+<Institution>
+<Name>University of Pennsylvania</Name>
+<CityName>Philadelphia</CityName>
+<ZipCode>191046205</ZipCode>
+<PhoneNumber>2158987293</PhoneNumber>
+<StreetAddress>Research Services</StreetAddress>
+<CountryName>United States</CountryName>
+<StateName>Pennsylvania</StateName>
+<StateCode>PA</StateCode>
+</Institution>
+<ProgramElement>
+<Code>7970</Code>
+<Text>Combinatorics</Text>
+</ProgramElement>
+<ProgramReference>
+<Code>7556</Code>
+<Text>CONFERENCE AND WORKSHOPS</Text>
+</ProgramReference>
+</Award>
+</rootTag>

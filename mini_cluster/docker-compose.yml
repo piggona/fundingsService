@@ -1,0 +1,85 @@
+version: '2.2'
+services:
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0
+    container_name: es01
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - cluster.initial_master_nodes=es01
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - data01:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - elastic
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.5.0
+    container_name: kibana
+    environment:
+      ELASTICSEARCH_URL: http://es01:9200
+      ELASTICSEARCH_HOSTS: http://es01:9200
+    ports:
+      - 5601:5601
+    networks:
+      - elastic
+  cerebro:
+    image: lmenezes/cerebro
+    container_name: cerebro
+    ports:
+      - 9000:9000
+    networks:
+      - elastic
+  mysql:
+    image: mysql:8.0.15
+    container_name: mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: vanlink
+    volumes:
+      - mysqlvol:/var/lib/mysql
+    networks:
+      - elastic
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    volumes:
+      - data01:/data
+      - data01:/datalog
+    ports:
+      - 2181:2181
+    networks:
+      - elastic
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    hostname: kafka
+    depends_on: [ zookeeper ]
+    ports: 
+      - 9092:9092
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTIZED_PORT: 9092
+      KAFKA_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+    volumes:
+      - /var/run/docker.sock:/var/run/docker/sock
+      - data01:/kafka
+    networks:
+      - elastic
+volumes:
+    data01:
+        driver: local
+    mysqlvol:
+        driver: local
+networks:
+    elastic:
+        driver: bridge

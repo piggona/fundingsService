@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rootTag>
+<Award>
+<AwardTitle>Quantitative Studies of Chiral Induced Spin Selectivity in Amino Acids and Peptides</AwardTitle>
+<AwardEffectiveDate>07/01/2019</AwardEffectiveDate>
+<AwardExpirationDate>06/30/2022</AwardExpirationDate>
+<AwardTotalIntnAmount>452986.00</AwardTotalIntnAmount>
+<AwardAmount>452986</AwardAmount>
+<AwardInstrument>
+<Value>Standard Grant</Value>
+</AwardInstrument>
+<Organization>
+<Code>03090000</Code>
+<Directorate>
+<Abbreviation>MPS</Abbreviation>
+<LongName>Direct For Mathematical &amp; Physical Scien</LongName>
+</Directorate>
+<Division>
+<Abbreviation>CHE</Abbreviation>
+<LongName>Division Of Chemistry</LongName>
+</Division>
+</Organization>
+<ProgramOfficer>
+<SignBlockName>Colby Foss</SignBlockName>
+</ProgramOfficer>
+<AbstractNarration>Electrons are one of the basic particles that make up atoms and molecules.  Two key features of an electron are its negative charge and its spin (the electron spins about an axis, like a spinning top). For a long time, scientists have known that an electron's motion through molecules depends on how it's charge is attracted to the positively-charged nuclei and repelled by the other electrons. It was recently discovered that the direction of an electron's spin could alter the ability of an electron to move through a chiral molecule, in a process called spin-filtering. A molecule is chiral when it's mirror images cannot be superimposed on one another; Our right and left hands are examples of chiral objects. The recent finding that the electron's spin can also affect its motion, particularly when interacting with a chiral molecule, opens new possibilities in chemistry.  In this project funded by the Chemical Structure, Dynamics and Mechanism-A program of the Chemistry Division, Professor David Waldeck of the University of Pittsburgh and his students are using electrical and electrochemical methods to correlate the spin filtering properties of chiral molecules with their molecular structures.  Their discoveries could have important implications for controlling chirality in chemical reactions, which could benefit the development of new pharmaceuticals and the creation of better catalysts for advanced manufacturing. Students working on this project benefit from collaborative and multidisciplinary activities with other scientists in Pittsburgh and Israel. Professor Waldeck is also building a network of middle school and high school science teachers to promote interest and learning in science.&lt;br/&gt; &lt;br/&gt;The chiral induced spin selectivity (CISS) effect challenges the conventional wisdom about the magnitude of spin-orbit coupling in organic molecules and raises interesting implications for the role of chirality in electron transfer processes. While numerous experiments demonstrate CISS for a range of molecules, the need exists to perform quantitative measurements of the phenomenon and correlate it with other molecular properties. The experimental studies explore the spin-filtering that arises from CISS.  Hall probe measurements are used to quantify the magnetization that arises from films comprising chiral molecules, both with and without chiral secondary structure.  The researchers also measure spin polarization and compare it with intrinsic molecular properties, such as their chiro-optical response and their polarizabilities. Electrochemical measurements are used to quantify the spin filtering in electrochemical charge transfer reactions through chiral molecules and compared it with Hall probe studies on the same molecules. Given that spin can be an important constraint for chemical transformations and many biomolecules are chiral, the CISS effect could have important implications in both chemistry and biology.&lt;br/&gt;&lt;br/&gt;This award reflects NSF's statutory mission and has been deemed worthy of support through evaluation using the Foundation's intellectual merit and broader impacts review criteria.</AbstractNarration>
+<MinAmdLetterDate>06/19/2019</MinAmdLetterDate>
+<MaxAmdLetterDate>06/19/2019</MaxAmdLetterDate>
+<ARRAAmount/>
+<AwardID>1900078</AwardID>
+<Investigator>
+<FirstName>David</FirstName>
+<LastName>Waldeck</LastName>
+<EmailAddress>dave@pitt.edu</EmailAddress>
+<StartDate>06/19/2019</StartDate>
+<EndDate/>
+<RoleCode>Principal Investigator</RoleCode>
+</Investigator>
+<Institution>
+<Name>University of Pittsburgh</Name>
+<CityName>Pittsburgh</CityName>
+<ZipCode>152603203</ZipCode>
+<PhoneNumber>4126247400</PhoneNumber>
+<StreetAddress>300 Murdoch Building</StreetAddress>
+<CountryName>United States</CountryName>
+<StateName>Pennsylvania</StateName>
+<StateCode>PA</StateCode>
+</Institution>
+<ProgramElement>
+<Code>9101</Code>
+<Text>Chem Struct,Dynmcs&amp;Mechansms A</Text>
+</ProgramElement>
+<ProgramReference>
+<Code>7203</Code>
+<Text>QUANTUM INFORMATION SCIENCE</Text>
+</ProgramReference>
+<ProgramReference>
+<Code>9263</Code>
+<Text>COMPUTATIONAL SCIENCE &amp; ENGING</Text>
+</ProgramReference>
+</Award>
+</rootTag>

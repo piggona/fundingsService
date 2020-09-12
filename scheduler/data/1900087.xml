@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rootTag>
+<Award>
+<AwardTitle>Collaborative Research: Excellence In Research: Computational Framework and Data Science for Identification</AwardTitle>
+<AwardEffectiveDate>10/01/2019</AwardEffectiveDate>
+<AwardExpirationDate>09/30/2022</AwardExpirationDate>
+<AwardTotalIntnAmount>299962.00</AwardTotalIntnAmount>
+<AwardAmount>299962</AwardAmount>
+<AwardInstrument>
+<Value>Standard Grant</Value>
+</AwardInstrument>
+<Organization>
+<Code>05050000</Code>
+<Directorate>
+<Abbreviation>CSE</Abbreviation>
+<LongName>Direct For Computer &amp; Info Scie &amp; Enginr</LongName>
+</Directorate>
+<Division>
+<Abbreviation>CNS</Abbreviation>
+<LongName>Division Of Computer and Network Systems</LongName>
+</Division>
+</Organization>
+<ProgramOfficer>
+<SignBlockName>Fay Cobb Payton</SignBlockName>
+</ProgramOfficer>
+<AbstractNarration>This project will enhance the data science capabilities and capacities at two historically black colleges and universities: North Carolina A&amp;T State University and Winston-Salem State University. These institutions will provide graduate programs to their students and enable the future workforce. More precisely, the project aims 1) to enhance research capabilities in identity and data science and technology; 2) to enhance the capacity of North Carolina A&amp;T State University and Winston-Salem State University to participate in identity and data-science research; 3) to involve graduate and undergraduate students, especially members of underrepresented minorities and females, in data science and identity research; and 4) to strengthen the North Carolina A&amp;T computer science doctoral and Master's programs and the Winston-Salem State Master's program as well as to strengthen the pipeline to computer science doctoral studies.&lt;br/&gt;&lt;br/&gt;Identity is an emerging critical research field thanks in part to the digitization of life and the accompanying threats. Data science helps by opening new opportunities for identifying and verifying persons in both cyberspace and the physical world for such tasks as authentication and intrusion detection. The project involves three thrusts. Thrust I involves enhancing an existing computational framework for identification. This thrust also involves extending the investigators' enhancement of the single-sign-on WebID protocol to allow virtually any authentication technique to be incorporated into the protocol, providing a platform for experimenting with applications of authentication from the other thrusts. Thrust II proposes authentication using periocular biometrics and active authentication using behavioral biometrics, and Thrust III will mitigate presentation attacks.&lt;br/&gt;&lt;br/&gt;This award reflects NSF's statutory mission and has been deemed worthy of support through evaluation using the Foundation's intellectual merit and broader impacts review criteria.</AbstractNarration>
+<MinAmdLetterDate>06/06/2019</MinAmdLetterDate>
+<MaxAmdLetterDate>06/06/2019</MaxAmdLetterDate>
+<ARRAAmount/>
+<AwardID>1900087</AwardID>
+<Investigator>
+<FirstName>Debzani</FirstName>
+<LastName>Deb</LastName>
+<EmailAddress>debd@wssu.edu</EmailAddress>
+<StartDate>06/06/2019</StartDate>
+<EndDate/>
+<RoleCode>Co-Principal Investigator</RoleCode>
+</Investigator>
+<Investigator>
+<FirstName>Mustafa</FirstName>
+<LastName>Atay</LastName>
+<EmailAddress>ataymu@wssu.edu</EmailAddress>
+<StartDate>06/06/2019</StartDate>
+<EndDate/>
+<RoleCode>Principal Investigator</RoleCode>
+</Investigator>
+<Institution>
+<Name>Winston-Salem State University</Name>
+<CityName>Winston Salem</CityName>
+<ZipCode>271100003</ZipCode>
+<PhoneNumber>3367503019</PhoneNumber>
+<StreetAddress>601 S Martin Luther King Jr Dr</StreetAddress>
+<CountryName>United States</CountryName>
+<StateName>North Carolina</StateName>
+<StateCode>NC</StateCode>
+</Institution>
+<ProgramElement>
+<Code>1594</Code>
+<Text>Hist Black Colleges and Univ</Text>
+</ProgramElement>
+<ProgramReference>
+<Code>041Z</Code>
+<Text>HBCU-Strengthening Research Capacities</Text>
+</ProgramReference>
+<ProgramReference>
+<Code>9178</Code>
+<Text>UNDERGRADUATE EDUCATION</Text>
+</ProgramReference>
+</Award>
+</rootTag>
