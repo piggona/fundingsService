@@ -20,7 +20,7 @@ func InitDB(passwd, host string) {
 
 	orm.SetMaxOpenConns("default", 30)
 
-	if defaultDB, err := orm.GetDB("fundingsview"); err == nil {
+	if defaultDB, err := orm.GetDB("fundings"); err == nil {
 		defaultDB.SetConnMaxLifetime(3395 * time.Second)
 		err = defaultDB.Ping()
 		if err != nil {
