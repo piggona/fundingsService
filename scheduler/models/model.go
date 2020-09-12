@@ -17,10 +17,6 @@ type ImportTask struct {
 	Status string
 }
 
-func init() {
-	orm.RegisterModel(new(ImportTask))
-}
-
 func GetImportTask(offset int) (importTask *ImportTask, err error) {
 	tasks := []*ImportTask{}
 	_, err = orm.NewOrm().QueryTable(new(ImportTask)).Filter("status", STATUS_READY).Filter("type", "0").Limit(1, offset).All(&tasks)

@@ -1,18 +1,20 @@
 package models
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func init() {
+func InitDB(passwd, host string) {
 	if err := orm.RegisterDriver("mysql", orm.DRMySQL); err != nil {
 		panic(err)
 	}
 
-	if err := orm.RegisterDataBase("default", "mysql", "root:vanlink@(172.30.39.100:3306)/fundingsview?charset=utf8&timeout=5s"); err != nil {
+	connectStr := fmt.Sprintf("root:%s@(%s)/fundingsview?charset=utf8&timeout=5s", passwd, host)
+	if err := orm.RegisterDataBase("default", "mysql", connectStr); err != nil {
 		panic(err)
 	}
 
@@ -25,4 +27,5 @@ func init() {
 			panic(err)
 		}
 	}
+	orm.RegisterModel(new(ImportTask))
 }

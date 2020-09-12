@@ -12,7 +12,7 @@ import (
 func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	brokers := []string{"172.30.39.100:9092"}
-	middleware.InitProducer(ctx, brokers)
+	middleware.InitProducer(ctx, os.GetEnv("BROKERS"))
+	models.InitDB(os.GetEnv("DB_PASSWD"), os.GetEnv("DB_HOST"))
 	crontask.Start(ctx, 100, time.Minute*time.Duration(10), scanner.NewScanner())
 }

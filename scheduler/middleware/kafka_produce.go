@@ -102,7 +102,7 @@ func InitProducer(ctx context.Context, brokers []string) {
 	// config.Producer.Partitioner = sarama.NewRandomPartitioner // 新选出一个partition
 	config.Producer.Return.Successes = true // 成功交付的消息将在success channel返回
 
-	producer, err = sarama.NewSyncProducer([]string{"172.30.39.100:9092"}, config)
+	producer, err = sarama.NewSyncProducer(brokers, config)
 	if err != nil {
 		log.Error("producer closed, err:", err)
 		return
