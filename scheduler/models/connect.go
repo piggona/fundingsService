@@ -13,7 +13,7 @@ func InitDB(passwd, host string) {
 		panic(err)
 	}
 
-	connectStr := fmt.Sprintf("root:%s@(%s)/fundingsview?charset=utf8&timeout=5s", passwd, host)
+	connectStr := fmt.Sprintf("root:%s@(%s)/fundings?charset=utf8&timeout=5s", passwd, host)
 	if err := orm.RegisterDataBase("default", "mysql", connectStr); err != nil {
 		panic(err)
 	}
