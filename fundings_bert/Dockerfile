@@ -6,7 +6,7 @@ COPY ./data/ .
 
 ENV BROKERS kafka:9092
 
-RUN pip install kafka-python PyMySQL
+RUN pip install kafka-python
 
 VOLUME /Project/service/get_keywords/tmp
 
