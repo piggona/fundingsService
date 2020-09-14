@@ -1,0 +1,34 @@
+version: '2.2'
+services:
+  scheduler:
+    image: haohao95/scheduler_service:v0.1.5
+    container_name: scheduler
+    hostname: scheduler
+    volumes:
+      - /home/haohao/Documents/fundingsRaw:/home
+    networks:
+      - elastic
+  keywords:
+    image: haohao95/keyword_service:v0.1.3
+    container_name: keywords
+    hostname: keywords
+    volumes:
+      - bert:/Project/service/get_keywords/tmp
+    networks:
+      - elastic
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.5.0
+    container_name: logstash
+    hostname: logstash
+    volumes:
+      - /home/haohao/fundingsService/logstash/pipeline:/usr/share/logstash/pipeline/
+      - /home/haohao/fundingsService/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
+    networks:
+      - elastic
+volumes:
+  bert:
+    driver: local
+networks:
+  elastic:
+    external:
+      name: cluster_elastic
