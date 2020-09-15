@@ -91,10 +91,10 @@ func (p *TemplateSearch) Request(ctx context.Context, input SearcherReq, index s
 }
 
 func (p *TemplateSearch) parser(input SearcherReq) (map[string]interface{}, error) {
-	i, ok := input.(*PlainSearchReq)
+	i, ok := input.(*TemplateSearchReq)
 	if !ok {
 		log.Error("type assertion failed")
-		return nil, fmt.Errorf("Error bad request type, expect type: *PlainSearchReq")
+		return nil, fmt.Errorf("Error bad request type, expect type: *TemplateSearchReq")
 	}
 	obj, err := i.Validate()
 	if err != nil {
