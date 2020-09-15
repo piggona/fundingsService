@@ -166,3 +166,13 @@ func TestPlainSearch(t *testing.T) {
 	bytes, _ := json.Marshal(res)
 	log.Info("plain result: %s", string(bytes))
 }
+
+func TestTemplateSearch(t *testing.T) {
+	res, err := GetBasicRankGrowth()
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	bytes, _ := json.Marshal(res)
+	log.Info("plain result: %s", string(bytes))
+}

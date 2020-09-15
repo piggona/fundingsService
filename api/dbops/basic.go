@@ -13,6 +13,9 @@ import (
 
 const (
 	INDEX = "nsf_data"
+
+	// template ids
+	basicrankgrowth = "basicrankgrowth"
 )
 
 // 主页元素-解析-技术
@@ -127,6 +130,79 @@ func GetBasicAnalysisTech() ([]*BasicAnalysisTechResult, error) {
 		result[id] = &BasicAnalysisTechResult{
 			Key:   ele.Key,
 			Techs: techs,
+		}
+	}
+	return result, nil
+}
+
+type BasicRankGrowthResult struct {
+	Key       string
+	DateValue map[string]int
+}
+
+type BasicRankGrowthBodyBucket struct {
+	KeyAsString string `json:"key_as_string"`
+	RateSum     map[string]float64
+}
+
+type AggYear struct {
+	Buckets []*BasicRankGrowthBodyBucket `json:"buckets"`
+}
+
+type BasicRankGrowthBodyElement struct {
+	Key     string   `json:"key"`
+	AggYear *AggYear `json:"agg_year"`
+}
+
+func GetBasicRankGrowth() ([]*BasicRankGrowthResult, error) {
+	bodyElement := []*BasicRankGrowthBodyElement{}
+	ais, err := esconn.NewAwardTemplateSearcher()
+	if err != nil {
+		log.Error("create new plain searcher error: %s", err)
+		return nil, err
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+	defer cancel()
+	templateId := basicrankgrowth
+	params := map[string]string{
+		"from": "10",
+		"size": "10",
+	}
+	resp, err := ais.Request(ctx, searcher.NewTemplateSearchReq(templateId, params), INDEX)
+	if err != nil {
+		log.Error("searcher request error: %s", err)
+		return nil, err
+	}
+	obj, err := resp.Find(nil, "aggregations", "rate_list", "buckets")
+	if err != nil {
+		log.Error("resp find error: %s", err)
+		return nil, err
+	}
+	jsonObj, ok := obj.(*simplejson.Json)
+	if !ok {
+		log.Error("assertion error when assert object to simplejson.Json: %s", err)
+		return nil, err
+	}
+	objStr, err := jsonObj.Encode()
+	if err != nil {
+		log.Error("json object encode error: %s", err)
+		return nil, err
+	}
+	err = json.Unmarshal(objStr, &bodyElement)
+	if err != nil {
+		log.Error("json string unmarshal to BasicAnalysisTechBodyElement error: %s", err)
+		return nil, err
+	}
+	result := make([]*BasicRankGrowthResult, len(bodyElement))
+	for id, bucs := range bodyElement {
+		buckets := bucs
+		result[id] = &BasicRankGrowthResult{
+			Key:       buckets.Key,
+			DateValue: make(map[string]int),
+		}
+		for _, buc := range buckets.AggYear.Buckets {
+			bucket := buc
+			result[id].DateValue[bucket.KeyAsString] = int(bucket.RateSum["value"])
 		}
 	}
 	return result, nil
