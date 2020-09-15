@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/piggona/fundingsView/api/defs"
+	"github.com/piggona/fundingsView/api/utils/log"
 )
 
 // func TestConn(t *testing.T) {
@@ -154,4 +155,13 @@ func TestFundReference(t *testing.T) {
 	for _, val := range result.Agg {
 		t.Errorf("%v\n", val)
 	}
+}
+
+func TestPlainSearch(t *testing.T) {
+	res, err := GetBasicAnalysisTech()
+	if err != nil {
+		t.Error(err)
+	}
+	bytes, _ := json.Marshal(res)
+	log.Info("plain result: %s", string(bytes))
 }

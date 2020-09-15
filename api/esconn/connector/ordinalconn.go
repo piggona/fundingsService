@@ -24,10 +24,56 @@ type OrdinalConn struct {
 	info map[string]interface{}
 }
 
+func (o *OrdinalConn) QueryTemplate(ctx context.Context, req map[string]interface{}, index string) (map[string]interface{}, error) {
+	c, err := o.getHandler()
+	result := make(map[string]interface{})
+	var buf bytes.Buffer
+	if err != nil {
+		return nil, fmt.Errorf("Error: %s", err)
+	}
+	es, ok := c.(*elasticsearch.Client)
+	if !ok {
+		return nil, fmt.Errorf("Error: handler not in type *elasticsearch.Client")
+	}
+	if err := json.NewEncoder(&buf).Encode(&req); err != nil {
+		return nil, fmt.Errorf("Error encoding query: %s", err)
+	}
+	// es.Search(es.Search.WithSearchType("template"))
+	res, err := es.SearchTemplate(
+		&buf,
+		es.SearchTemplate.WithContext(ctx),
+		es.SearchTemplate.WithIndex(index),
+	)
+	if err != nil {
+		return nil, fmt.Errorf("Error getting response: %s", err)
+	}
+	defer res.Body.Close()
+
+	if res.IsError() {
+		var e map[string]interface{}
+		if err := json.NewDecoder(res.Body).Decode(&e); err != nil {
+			return nil, fmt.Errorf("Error parsing response body in res.IsError(): %s", err)
+		}
+		return nil, fmt.Errorf("[%s] %s: %s",
+			res.Status(),
+			e["error"].(map[string]interface{})["type"],
+			e["error"].(map[string]interface{})["reason"])
+	}
+	if err := json.NewDecoder(res.Body).Decode(&result); err != nil {
+		return nil, fmt.Errorf("Error parsing response body: %s", err)
+	}
+	log.Printf("[%s] %d hits; took: %dms",
+		res.Status(),
+		int(result["hits"].(map[string]interface{})["total"].(map[string]interface{})["value"].(float64)),
+		int(result["took"].(float64)))
+
+	return result, nil
+}
+
 // Query 使用Conn来处理请求，并将response Body解析为map返回.
 // Params req:elasticsearch DSL request
 // Params index:elasticsearch index used for this transaction
-func (o *OrdinalConn) Query(req map[string]interface{}, index string) (map[string]interface{}, error) {
+func (o *OrdinalConn) Query(ctx context.Context, req map[string]interface{}, index string) (map[string]interface{}, error) {
 	c, err := o.getHandler()
 	result := make(map[string]interface{})
 	var buf bytes.Buffer
@@ -42,7 +88,7 @@ func (o *OrdinalConn) Query(req map[string]interface{}, index string) (map[strin
 		return nil, fmt.Errorf("Error encoding query: %s", err)
 	}
 	res, err := es.Search(
-		es.Search.WithContext(context.Background()),
+		es.Search.WithContext(ctx),
 		es.Search.WithIndex(index),
 		es.Search.WithBody(&buf),
 		es.Search.WithTrackTotalHits(true),
@@ -89,7 +135,7 @@ func NewOrdinalConn() (Conn, error) {
 		var err error
 		cfg := elasticsearch.Config{
 			Addresses: []string{
-				"http://10.103.240.34:8070/es/",
+				"http://10.103.240.121:9200/",
 				// "http://es03:9200",
 			},
 		}

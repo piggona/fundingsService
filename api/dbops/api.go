@@ -1,9 +1,11 @@
 package dbops
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
+
 	"github.com/piggona/fundingsView/api/defs"
 	"github.com/piggona/fundingsView/api/esconn"
 	"github.com/piggona/fundingsView/api/esconn/searcher"
@@ -31,7 +33,7 @@ func GetAwardIDResult(id string, index string) (*AwardIDResult, error) {
 	if err != nil {
 		return nil, errors.New("Errors Bad type 'id' not type string")
 	}
-	result, err = ais.Request(req, index)
+	result, err = ais.Request(context.Background(), req, index)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +68,7 @@ func GetAwardIDDetail(id string, index string) (*BasicDetailResponse, error) {
 	if err != nil {
 		return nil, errors.New("Errors Bad type 'id' not type string")
 	}
-	result, err = ais.Request(req, index)
+	result, err = ais.Request(context.Background(), req, index)
 	if err != nil {
 		return nil, err
 	}
@@ -235,7 +237,7 @@ func GetMultiSearchResult(multi *MultiSearchQuery, index string, source []string
 	if err != nil {
 		return nil, errors.New("Errors Bad type 'id' not type string")
 	}
-	tres, err := ais.Request(req, index)
+	tres, err := ais.Request(context.Background(), req, index)
 	if err != nil {
 		return nil, fmt.Errorf("Error Request: %s", err)
 	}
@@ -306,7 +308,7 @@ func GetAggSearchResult(multi *MultiSearchQuery, index string, source []string) 
 	if err != nil {
 		return nil, errors.New("Errors Bad type 'id' not type MultiSearchQuery")
 	}
-	result, err = ais.Request(req, index)
+	result, err = ais.Request(context.Background(), req, index)
 	if err != nil {
 		return nil, err
 	}
@@ -388,7 +390,7 @@ func GetBucketSearchResult(multi *MultiSearchQuery, index string, source []strin
 	if err != nil {
 		return nil, errors.New("Errors Bad type 'id' not type MultiSearchQuery")
 	}
-	result, err = ais.Request(req, index)
+	result, err = ais.Request(context.Background(), req, index)
 	if err != nil {
 		return nil, err
 	}

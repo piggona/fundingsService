@@ -1,6 +1,7 @@
 package searcher
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"strconv"
@@ -45,12 +46,12 @@ func (a *AwardIDSearch) SetConn(conn connector.Conn) {
 }
 
 // Request 将用户传入的数据转换数据形式，执行elasticsearch搜索，将结果数据转换到指定结构体
-func (a *AwardIDSearch) Request(input SearcherReq, index string) (SearcherResp, error) {
+func (a *AwardIDSearch) Request(ctx context.Context, input SearcherReq, index string) (SearcherResp, error) {
 	searchmap, err := a.parser(input)
 	if err != nil {
 		return nil, err
 	}
-	res, err := a.conn.Query(searchmap, index)
+	res, err := a.conn.Query(ctx, searchmap, index)
 	if err != nil {
 		return nil, err
 	}

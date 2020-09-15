@@ -1,6 +1,7 @@
 package searcher
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"strconv"
@@ -93,12 +94,12 @@ func (a *AwardAggSearch) parser(input SearcherReq) (map[string]interface{}, erro
 	return result, nil
 }
 
-func (a *AwardAggSearch) Request(input SearcherReq, index string) (SearcherResp, error) {
+func (a *AwardAggSearch) Request(ctx context.Context, input SearcherReq, index string) (SearcherResp, error) {
 	searchmap, err := a.parser(input)
 	if err != nil {
 		return nil, err
 	}
-	res, err := a.conn.Query(searchmap, index)
+	res, err := a.conn.Query(ctx, searchmap, index)
 	if err != nil {
 		return nil, err
 	}

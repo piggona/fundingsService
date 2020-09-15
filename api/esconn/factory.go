@@ -45,3 +45,27 @@ func NewAwardAggSearcher() (searcher.Searcher, error) {
 	result.SetSource(source)
 	return result, nil
 }
+
+func NewAwardPlainSearcher(source []string) (searcher.Searcher, error) {
+	var err error
+	conn, err := connector.NewOrdinalConn()
+	if err != nil {
+		return nil, err
+	}
+	result := &searcher.PlainSearch{}
+	result.SetConn(conn)
+	result.SetSource(source)
+	return result, nil
+}
+
+func NewAwardTemplateSearcher() (searcher.Searcher, error) {
+	var err error
+	conn, err := connector.NewOrdinalConn()
+	if err != nil {
+		return nil, err
+	}
+	result := &searcher.TemplateSearch{}
+	result.SetConn(conn)
+	result.SetSource([]string{})
+	return result, nil
+}
