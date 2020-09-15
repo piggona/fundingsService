@@ -52,7 +52,7 @@ func (p *TemplateSearchResp) Find(resp interface{}, paths ...string) (interface{
 }
 
 func NewTemplateSearchResp(resp interface{}) (*TemplateSearchResp, error) {
-	json, err := simplejson.NewJson([]byte(resp.(string)))
+	json, err := simplejson.NewJson(resp.([]byte))
 	if err != nil {
 		log.Error("simplejson initialization failed: %s", err)
 		return nil, err

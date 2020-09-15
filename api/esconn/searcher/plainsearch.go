@@ -52,7 +52,7 @@ func (p *PlainSearchResp) Find(resp interface{}, paths ...string) (interface{}, 
 }
 
 func NewPlainSearchResp(resp interface{}) (*PlainSearchResp, error) {
-	json, err := simplejson.NewJson([]byte(resp.(string)))
+	json, err := simplejson.NewJson(resp.([]byte))
 	if err != nil {
 		log.Error("simplejson initialization failed: %s", err)
 		return nil, err
@@ -100,7 +100,7 @@ func (p *PlainSearch) parser(input SearcherReq) (map[string]interface{}, error) 
 		log.Error("validation error: %s", err)
 		return nil, err
 	}
-	json := obj.(simplejson.Json)
+	json := obj.(*simplejson.Json)
 	inputMap, err := json.Map()
 	if err != nil {
 		log.Error("json convert to map failed: %s", err)

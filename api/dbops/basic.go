@@ -56,8 +56,8 @@ var basic_analysis_tech = `
 `
 
 type BasicAnalysisTech struct {
-	Tech  string
-	Value int
+	Tech  string `json:"tech"`
+	Value int    `json:"amount"`
 }
 
 type BasicAnalysisTechResult struct {
@@ -70,9 +70,13 @@ type BasicAnalysisTechBodyTechElement struct {
 	TechGroupSum map[string]float32 `json:"tech_group_sum"`
 }
 
-type BasicAnalysisTechBodyElement struct {
-	Key     string                              `json:"key"`
+type Techs struct {
 	Buckets []*BasicAnalysisTechBodyTechElement `json:"buckets"`
+}
+
+type BasicAnalysisTechBodyElement struct {
+	Key   string `json:"key"`
+	Techs Techs  `json:"techs"`
 }
 
 func GetBasicAnalysisTech() ([]*BasicAnalysisTechResult, error) {
@@ -94,7 +98,7 @@ func GetBasicAnalysisTech() ([]*BasicAnalysisTechResult, error) {
 		log.Error("resp find error: %s", err)
 		return nil, err
 	}
-	jsonObj, ok := obj.(simplejson.Json)
+	jsonObj, ok := obj.(*simplejson.Json)
 	if !ok {
 		log.Error("assertion error when assert object to simplejson.Json: %s", err)
 		return nil, err
@@ -112,8 +116,9 @@ func GetBasicAnalysisTech() ([]*BasicAnalysisTechResult, error) {
 	result := make([]*BasicAnalysisTechResult, len(bodyElement))
 	for id, element := range bodyElement {
 		ele := element
-		techs := make([]*BasicAnalysisTech, len(ele.Buckets))
-		for i, bucket := range ele.Buckets {
+		techs := make([]*BasicAnalysisTech, len(ele.Techs.Buckets))
+		for i, buc := range ele.Techs.Buckets {
+			bucket := buc
 			techs[i] = &BasicAnalysisTech{
 				Tech:  bucket.Key,
 				Value: int(bucket.TechGroupSum["value"]),

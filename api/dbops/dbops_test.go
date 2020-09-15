@@ -161,6 +161,7 @@ func TestPlainSearch(t *testing.T) {
 	res, err := GetBasicAnalysisTech()
 	if err != nil {
 		t.Error(err)
+		return
 	}
 	bytes, _ := json.Marshal(res)
 	log.Info("plain result: %s", string(bytes))
