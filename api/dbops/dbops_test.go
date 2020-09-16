@@ -168,7 +168,7 @@ func TestPlainSearch(t *testing.T) {
 }
 
 func TestTemplateSearch(t *testing.T) {
-	res, err := GetBasicRankGrowth()
+	res, err := GetBasicRankGrowth(0, 10)
 	if err != nil {
 		t.Error(err)
 		return
