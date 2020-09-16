@@ -1,13 +1,17 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/piggona/fundingsView/api/dbops"
 	"github.com/piggona/fundingsView/api/defs"
+	"github.com/piggona/fundingsView/api/utils/log"
 )
 
 func HomePage(c *gin.Context) {
@@ -80,5 +84,40 @@ func SwitchTech(c *gin.Context) {
 }
 
 func GetSearch(c *gin.Context) {
+	searchReq := &defs.SearchRequest{}
+	err := json.NewDecoder(c.Request.Body).Decode(searchReq)
+	if err != nil {
+		log.Error("read request body error: %s", err)
+		return
+	}
+	dbSearch := &dbops.SearchParams{
+		From: strconv.Itoa(searchReq.From),
+	}
+	for _, element := range searchReq.Array {
+		switch element.Attr {
+		case "basic":
+			dbSearch.Title = element.Query
+			dbSearch.Description = element.Query
+			dbSearch.TitleOp = element.Logic
+			dbSearch.DescriptionOp = element.Logic
+		case "Investigator":
+			dbSearch.Institution = element.Query
+			dbSearch.InstitutionOp = element.Logic
+		case "Institution":
+			dbSearch.Organization = element.Query
+			dbSearch.OrganizationOp = element.Logic
+		case "Technology":
+			dbSearch.Technology = element.Query
+			dbSearch.TechnologyOp = element.Logic
+		case "Industry":
+			dbSearch.Industries = element.Query
+			dbSearch.IndustriesOp = element.Logic
+		case "Date":
+			dateRange := strings.Split(element.Query, " ")
+			dbSearch.DateFrom, _ = time.Parse("2006-01-02", dateRange[0])
+			dbSearch.DateTo, _ = time.Parse("2006-01-02", dateRange[1])
+		}
+	}
+	dbops.GetMultiSearch(dbSearch)
 	return
 }
