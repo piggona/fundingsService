@@ -1,5 +1,6 @@
 package dbops
 
+<<<<<<< HEAD
 import "fmt"
 
 const (
@@ -9,6 +10,8 @@ const (
 	industry     = "industries.keyword"
 )
 
+=======
+>>>>>>> 7ca21c937d696be8de41fffdc02c456b1375066b
 var basic_analysis_tech = `
 {
   "size": 0,
