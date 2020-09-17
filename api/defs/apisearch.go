@@ -20,8 +20,8 @@ type SearchRequest struct {
 
 // Response Statistic Part
 type Statistic struct {
-	FundingsAmount float32 `json:"fundingsAmount"`
-	AvgInvested    float32 `json:"avgInvested"`
+	FundingsAmount float64 `json:"fundingsAmount"`
+	AvgInvested    float64 `json:"avgInvested"`
 }
 
 // Response FundRank part & FundRank response
@@ -39,8 +39,9 @@ type FundRankResponse struct {
 
 // Response ResPie part
 type SeriesData struct {
-	Value string `json:"value"`
-	Name  string `json:"name"`
+	Value int    `json:"value"`
+	Name  string `json:"key"`
+	Key   string `json:"name"`
 }
 
 type ResPieResponse struct {
@@ -95,3 +96,17 @@ type BasicResponse struct {
 
 // 	}
 // }
+
+type SearchResultBucket struct {
+	Amount string `json:"amount"`
+	ID     string `json:"id"`
+	UUID   string `json:"uuid"`
+	Title  string `json:"title"`
+	Start  string `json:"start"`
+	End    string `json:"end"`
+}
+
+type SearchResponse struct {
+	TotalResults int                   `json:"tot_res"`
+	Data         []*SearchResultBucket `json:"data"`
+}

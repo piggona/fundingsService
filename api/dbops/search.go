@@ -13,18 +13,19 @@ import (
 )
 
 type FundElement struct {
-	Industries         []string            `json:"industries"`
-	Technology         []string            `json:"technology"`
-	Description        string              `json:"description"`
-	AwardEffecticeDate string              `json:"award_effectice_date"`
-	AwardID            string              `json:"award_id"`
-	Organization       []*Organization     `json:"organization"`
-	Investigator       []*Investigator     `json:"investigator"`
-	ProgramReference   []*ProgramReference `json:"program_reference"`
-	ProgramElement     []*ProgramElement   `json:"program_element"`
-	AwardTitle         string              `json:"award_title"`
-	Institution        []*Institution      `json:"institution"`
-	AwardAmount        int                 `json:"award_amount"`
+	Industries          []string            `json:"industries"`
+	Technology          []string            `json:"technology"`
+	Description         string              `json:"description"`
+	AwardEffecticeDate  string              `json:"award_effectice_date"`
+	AwardExpirationDate string              `json:"award_expiration_date"`
+	AwardID             string              `json:"award_id"`
+	Organization        []*Organization     `json:"organization"`
+	Investigator        []*Investigator     `json:"investigator"`
+	ProgramReference    []*ProgramReference `json:"program_reference"`
+	ProgramElement      []*ProgramElement   `json:"program_element"`
+	AwardTitle          string              `json:"award_title"`
+	Institution         []*Institution      `json:"institution"`
+	AwardAmount         int                 `json:"award_amount"`
 }
 
 type Organization struct {
