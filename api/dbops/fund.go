@@ -811,7 +811,7 @@ func GetFundOrgDiv(organization string) ([]*FundOrgDivResult, error) {
 	return result, nil
 }
 
-func GetRelatedFunds(key, value string) ([]*FundElement, error) {
+func GetRelatedFunds(key, value string, page int) ([]*FundElement, error) {
 	bodyElement := []*SearchResultElement{}
 	ais, err := esconn.NewAwardPlainSearcher([]string{})
 	if err != nil {
@@ -820,7 +820,7 @@ func GetRelatedFunds(key, value string) ([]*FundElement, error) {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
-	searchContent := GetRelatedTemplate(key, value)
+	searchContent := GetRelatedTemplate(key, value, page)
 	resp, err := ais.Request(ctx, searcher.NewPlainSearchReq(&searchContent), INDEX)
 	if err != nil {
 		log.Error("searcher request error: %s", err)

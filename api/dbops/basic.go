@@ -163,6 +163,7 @@ type BasicAnalysisTech struct {
 
 type BasicAnalysisTechResult struct {
 	Key   string
+	Name  string
 	Techs []*BasicAnalysisTech
 }
 
@@ -175,9 +176,18 @@ type Techs struct {
 	Buckets []*BasicAnalysisTechBodyTechElement `json:"buckets"`
 }
 
-type BasicAnalysisTechBodyElement struct {
+type DivisionNameBucket struct {
 	Key   string `json:"key"`
 	Techs Techs  `json:"techs"`
+}
+
+type DivisionName struct {
+	Buckets []*DivisionNameBucket `json:"buckets"`
+}
+
+type BasicAnalysisTechBodyElement struct {
+	Key          string       `json:"key"`
+	DivisionName DivisionName `json:"division_name"`
 }
 
 func GetBasicAnalysisTech() ([]*BasicAnalysisTechResult, error) {
@@ -217,8 +227,8 @@ func GetBasicAnalysisTech() ([]*BasicAnalysisTechResult, error) {
 	result := make([]*BasicAnalysisTechResult, len(bodyElement))
 	for id, element := range bodyElement {
 		ele := element
-		techs := make([]*BasicAnalysisTech, len(ele.Techs.Buckets))
-		for i, buc := range ele.Techs.Buckets {
+		techs := make([]*BasicAnalysisTech, len(ele.DivisionName.Buckets[0].Techs.Buckets))
+		for i, buc := range ele.DivisionName.Buckets[0].Techs.Buckets {
 			bucket := buc
 			techs[i] = &BasicAnalysisTech{
 				Tech:  bucket.Key,
@@ -227,6 +237,7 @@ func GetBasicAnalysisTech() ([]*BasicAnalysisTechResult, error) {
 		}
 		result[id] = &BasicAnalysisTechResult{
 			Key:   ele.Key,
+			Name:  ele.DivisionName.Buckets[0].Key,
 			Techs: techs,
 		}
 	}
@@ -241,6 +252,7 @@ type BasicAnalysisIndu struct {
 
 type BasicAnalysisInduResult struct {
 	Key   string
+	Name  string
 	Indus []*BasicAnalysisIndu
 }
 
@@ -253,13 +265,22 @@ type Indus struct {
 	Buckets []*BasicAnalysisInduBodyInduElement `json:"buckets"`
 }
 
-type BasicAnalysisInduBodyElement struct {
+type InduDivisionNameBucket struct {
 	Key   string `json:"key"`
 	Indus Indus  `json:"indus"`
 }
 
+type InduDivisionName struct {
+	Buckets []*InduDivisionNameBucket `json:"buckets"`
+}
+
+type BasicAnalysisInduBodyElement struct {
+	Key          string           `json:"key"`
+	DivisionName InduDivisionName `json:"division_name"`
+}
+
 func GetBasicAnalysisIndu() ([]*BasicAnalysisInduResult, error) {
-	bodyElement := []*BasicAnalysisTechBodyElement{}
+	bodyElement := []*BasicAnalysisInduBodyElement{}
 	ais, err := esconn.NewAwardPlainSearcher([]string{})
 	if err != nil {
 		log.Error("create new plain searcher error: %s", err)
@@ -295,16 +316,17 @@ func GetBasicAnalysisIndu() ([]*BasicAnalysisInduResult, error) {
 	result := make([]*BasicAnalysisInduResult, len(bodyElement))
 	for id, element := range bodyElement {
 		ele := element
-		indus := make([]*BasicAnalysisIndu, len(ele.Techs.Buckets))
-		for i, buc := range ele.Techs.Buckets {
+		indus := make([]*BasicAnalysisIndu, len(ele.DivisionName.Buckets[0].Indus.Buckets))
+		for i, buc := range ele.DivisionName.Buckets[0].Indus.Buckets {
 			bucket := buc
 			indus[i] = &BasicAnalysisIndu{
 				Indu:  bucket.Key,
-				Value: int(bucket.TechGroupSum["value"]),
+				Value: int(bucket.InduGroupSum["value"]),
 			}
 		}
 		result[id] = &BasicAnalysisInduResult{
 			Key:   ele.Key,
+			Name:  ele.DivisionName.Buckets[0].Key,
 			Indus: indus,
 		}
 	}

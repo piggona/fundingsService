@@ -62,12 +62,9 @@ type TreeTitle struct {
 }
 
 type TreeData struct {
-	Title   TreeTitle        `json:"title"`
-	Depth   int              `json:"depth"`
-	Phrase  string           `json:"phrase"`
-	Content string           `json:"content"`
-	Color   string           `json:"color"`
-	Next    TreeNodeResponse `json:"next"`
+	Title    string      `json:"title"`
+	Key      string      `json:"key"`
+	Children []*TreeData `json:"children"`
 }
 
 type TreeNodeResponse struct {

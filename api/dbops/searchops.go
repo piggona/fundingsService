@@ -15,29 +15,37 @@ var basic_analysis_tech = `
   "aggs": {
     "tech_group": {
       "terms": {
-        "field": "organization.division.keyword",
+        "field": "organization.code.keyword",
         "size": 100
       },
       "aggs": {
-        "techs": {
-          "terms": {
-            "field": "technology.keyword",
+        "division_name": {
+          "term": {
+            "field": "organization.division.keyword",
             "size": 100
           },
           "aggs": {
-            "tech_group_sum": {
-              "sum": {
-                "field": "award_amount"
-              }
-            },
-            "r_bucket_sort":{
-              "bucket_sort": {
-                "sort": {
-                  "tech_group_sum": {
-                    "order": "desc"
+            "techs": {
+              "terms": {
+                "field": "technology.keyword",
+                "size": 100
+              },
+              "aggs": {
+                "tech_group_sum": {
+                  "sum": {
+                    "field": "award_amount"
                   }
                 },
-                "size": 10
+                "r_bucket_sort":{
+                  "bucket_sort": {
+                    "sort": {
+                      "tech_group_sum": {
+                        "order": "desc"
+                      }
+                    },
+                    "size": 10
+                  }
+                }
               }
             }
           }
@@ -53,35 +61,44 @@ var basic_analysis_indu = `
 	"size": 0,
 	"aggs": {
 	  "indu_group": {
-		"terms": {
-		  "field": "organization.division.keyword",
-		  "size": 50
-		},
-		"aggs": {
-		  "indus": {
-			"terms": {
-			  "field": "industries.keyword",
-			  "size": 50
-			},
-			"aggs": {
-			  "indu_group_sum": {
-				"sum": {
-				  "field": "award_amount"
-				}
-			  },
-			  "r_bucket_sort":{
-				"bucket_sort": {
-				  "sort": {
-					"indu_group_sum": {
-					  "order": "desc"
-					}
-				  },
-				  "size": 10
-				}
-			  }
-			}
-		  }
-		}
+      "terms": {
+        "field": "organization.division.keyword",
+        "size": 50
+      },
+      "aggs": {
+        "division_name": {
+          "term": {
+            "field": "organization.division.keyword",
+            "size": 50
+          },
+          "aggs": {
+            "indus": {
+              "terms": {
+                "field": "industries.keyword",
+                "size": 50
+              },
+              "aggs": {
+                "indu_group_sum": {
+                  "sum": {
+                    "field": "award_amount"
+                  }
+                },
+                "r_bucket_sort":{
+                  "bucket_sort": {
+                    "sort": {
+                      "indu_group_sum": {
+                        "order": "desc"
+                      }
+                    },
+                    "size": 10
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+		
 	  }
 	}
 }
@@ -152,9 +169,10 @@ var basic_pie = `
   }
 `
 
-func GetRelatedTemplate(key, value string) string {
+func GetRelatedTemplate(key, value string, page int) string {
 	var basic_related = `
     {
+        "from": %d,
         "size": 10,
         "query": {
             "term": {
@@ -165,5 +183,5 @@ func GetRelatedTemplate(key, value string) string {
         }
     }
     `
-	return fmt.Sprintf(basic_related, key, value)
+	return fmt.Sprintf(basic_related, page, key, value)
 }

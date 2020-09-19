@@ -55,7 +55,8 @@ type BasicDetailResponse struct {
 type LevelData struct {
 	Name     string       `json:"name"`
 	Value    int          `json:"value"`
-	Color    string       `json:"color"`
+	Type     string       `json:"type"`
+	UUID     string       `json:"uuid"`
 	Children []*LevelData `json:"children"`
 }
 
