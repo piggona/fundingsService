@@ -15,7 +15,7 @@ const (
 	induamount   = "induamount"
 	induorgrank  = "induorg"
 	indutechrank = "indutech"
-	indudivrank  = "indudivrank"
+	indudivrank  = "indudiv"
 )
 
 // 产业详情页-基金投资金额排名
@@ -124,6 +124,9 @@ func GetInduOrgRank(industry string) ([]*InduOrgRankResult, error) {
 	}
 	result := make([]*InduOrgRankResult, len(bodyElement))
 	for id, element := range bodyElement {
+		result[id] = &InduOrgRankResult{
+			DateValue: map[string]int{},
+		}
 		ele := element
 		for _, buc := range ele.YearBucket.Buckets {
 			bucket := buc
@@ -193,6 +196,9 @@ func GetInduTechRank(industry string) ([]*InduTechRankResult, error) {
 	}
 	result := make([]*InduTechRankResult, len(bodyElement))
 	for id, element := range bodyElement {
+		result[id] = &InduTechRankResult{
+			DateValue: map[string]int{},
+		}
 		ele := element
 		for _, buc := range ele.YearBucket.Buckets {
 			bucket := buc
@@ -250,7 +256,7 @@ func GetInduDivRank(industry string) ([]*InduDivRankResult, error) {
 		log.Error("searcher request error: %s", err)
 		return nil, err
 	}
-	obj, err := resp.Find(nil, "aggregations", "indu_list", "buckets")
+	obj, err := resp.Find(nil, "aggregations", "division_list", "buckets")
 	if err != nil {
 		log.Error("resp find error: %s", err)
 		return nil, err
@@ -272,6 +278,9 @@ func GetInduDivRank(industry string) ([]*InduDivRankResult, error) {
 	}
 	result := make([]*InduDivRankResult, len(bodyElement))
 	for id, element := range bodyElement {
+		result[id] = &InduDivRankResult{
+			DateValue: map[string]int{},
+		}
 		ele := element
 		for _, buc := range ele.DivisionName.Buckets[0].YearBucket.Buckets {
 			bucket := buc

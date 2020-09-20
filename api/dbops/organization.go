@@ -124,6 +124,9 @@ func GetOrgTechRank(organization string) ([]*OrgTechRankResult, error) {
 	}
 	result := make([]*OrgTechRankResult, len(bodyElement))
 	for id, element := range bodyElement {
+		result[id] = &OrgTechRankResult{
+			DateValue: map[string]int{},
+		}
 		ele := element
 		for _, buc := range ele.YearBucket.Buckets {
 			bucket := buc
@@ -193,6 +196,9 @@ func GetOrgInduRank(organization string) ([]*OrgInduRankResult, error) {
 	}
 	result := make([]*OrgInduRankResult, len(bodyElement))
 	for id, element := range bodyElement {
+		result[id] = &OrgInduRankResult{
+			DateValue: map[string]int{},
+		}
 		ele := element
 		for _, buc := range ele.YearBucket.Buckets {
 			bucket := buc
@@ -233,7 +239,7 @@ type OrgDivRankBodyElement struct {
 	DivisionName *OrgDivRankNameElementName `json:"division_name"`
 }
 
-func GetOrgDivRank(division string) ([]*OrgDivRankResult, error) {
+func GetOrgDivRank(organization string) ([]*OrgDivRankResult, error) {
 	bodyElement := []*OrgDivRankBodyElement{}
 	ais, err := esconn.NewAwardTemplateSearcher()
 	if err != nil {
@@ -243,14 +249,14 @@ func GetOrgDivRank(division string) ([]*OrgDivRankResult, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
 	params := map[string]string{
-		"division": division,
+		"organization": organization,
 	}
 	resp, err := ais.Request(ctx, searcher.NewTemplateSearchReq(orgdivrank, params), INDEX)
 	if err != nil {
 		log.Error("searcher request error: %s", err)
 		return nil, err
 	}
-	obj, err := resp.Find(nil, "aggregations", "indu_list", "buckets")
+	obj, err := resp.Find(nil, "aggregations", "division_list", "buckets")
 	if err != nil {
 		log.Error("resp find error: %s", err)
 		return nil, err
@@ -272,6 +278,9 @@ func GetOrgDivRank(division string) ([]*OrgDivRankResult, error) {
 	}
 	result := make([]*OrgDivRankResult, len(bodyElement))
 	for id, element := range bodyElement {
+		result[id] = &OrgDivRankResult{
+			DateValue: map[string]int{},
+		}
 		ele := element
 		for _, buc := range ele.DivisionName.Buckets[0].YearBucket.Buckets {
 			bucket := buc

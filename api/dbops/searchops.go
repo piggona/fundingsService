@@ -20,7 +20,7 @@ var basic_analysis_tech = `
       },
       "aggs": {
         "division_name": {
-          "term": {
+          "terms": {
             "field": "organization.division.keyword",
             "size": 100
           },
@@ -67,7 +67,7 @@ var basic_analysis_indu = `
       },
       "aggs": {
         "division_name": {
-          "term": {
+          "terms": {
             "field": "organization.division.keyword",
             "size": 50
           },
@@ -137,13 +137,13 @@ var basic_pie = `
       "categorys": {
         "terms": {
           "field": "organization.code.keyword",
-          "size": 2147483647
+          "size": 5
         },
         "aggs": {
           "category_name": {
             "terms": {
               "field": "organization.division.keyword",
-              "size": 10
+              "size": 5
             },
             "aggs": {
               "category_proportion": {
@@ -158,7 +158,7 @@ var basic_pie = `
                       "order": "desc"
                     }
                   },
-                  "size": 10
+                  "size": 5
                 }
               }
             }

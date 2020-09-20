@@ -12,6 +12,7 @@ import (
 )
 
 const (
+	funddetail   = "funddetail"
 	fundindudiv  = "fundindudiv"
 	fundinduorg  = "fundinduorg"
 	fundindutech = "fundindutech"
@@ -36,7 +37,7 @@ func GetFundDetail(fundID string) (*FundElement, error) {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
-	templateId := basicrankamount
+	templateId := funddetail
 	params := map[string]string{
 		"uuid": fundID,
 	}
@@ -64,6 +65,9 @@ func GetFundDetail(fundID string) (*FundElement, error) {
 	if err != nil {
 		log.Error("json string unmarshal to SearchResultElement error: %s", err)
 		return nil, err
+	}
+	if len(bodyElement) == 0 {
+		return nil, nil
 	}
 	result := bodyElement[0].Source
 	return result, nil

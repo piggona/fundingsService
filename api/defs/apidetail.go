@@ -63,3 +63,14 @@ type LevelData struct {
 type LevelDataResponse struct {
 	Data []*LevelData `json:"data"`
 }
+
+// Response Similar part
+type SimilarData struct {
+	Title    string   `json:"title"`
+	UUID     string   `json:"uuid"`
+	Keywords []string `json:"keywords"`
+}
+
+type SimilarDataResponse struct {
+	Data []*SimilarData `json:"data"`
+}

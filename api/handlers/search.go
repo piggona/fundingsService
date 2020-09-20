@@ -39,6 +39,7 @@ func HomePage(c *gin.Context) {
 				ErrorCode: elasticsearchError,
 			},
 		})
+		return
 	}
 	// 合成返回
 	resPie := pieParser(basicPie)
@@ -83,8 +84,10 @@ func pieParser(basicPie []*dbops.BasicPie) *defs.ResPieResponse {
 func cloudParser(hotIndu []*dbops.BasicRankAmountResult) *defs.ResCloudResponse {
 	data := make([]*defs.SeriesData, len(hotIndu))
 	for id, indu := range hotIndu {
-		data[id].Key = indu.Key
-		data[id].Value = indu.Value
+		data[id] = &defs.SeriesData{
+			Key:   indu.Key,
+			Value: indu.Value,
+		}
 	}
 	return &defs.ResCloudResponse{
 		Data: data,
@@ -95,9 +98,11 @@ func rankAmountParser(hotIndu []*dbops.BasicRankAmountResult) *defs.FundRankResp
 	data := make([]*defs.FundRankData, len(hotIndu))
 	orderType := "amount"
 	for id, res := range hotIndu {
-		data[id].Name = res.Key
-		data[id].Money = strconv.Itoa(res.Value)
-		data[id].Rank = strconv.Itoa(id)
+		data[id] = &defs.FundRankData{
+			Name:  res.Key,
+			Money: strconv.Itoa(res.Value),
+			Rank:  strconv.Itoa(id),
+		}
 	}
 	return &defs.FundRankResponse{
 		OrderType: orderType,
@@ -117,7 +122,7 @@ func (g GrowthRankList) Len() int {
 }
 
 func (g GrowthRankList) Less(i, j int) bool {
-	return g[i].Rate < g[j].Rate
+	return g[i].Rate > g[j].Rate
 }
 
 func (g GrowthRankList) Swap(i, j int) {
@@ -136,9 +141,11 @@ func rankGrowthParser(growthIndu []*dbops.BasicRankGrowthResult) *defs.FundRankR
 	}
 	sort.Sort(GrowthRankList(orderGrowth))
 	for id, growth := range orderGrowth {
-		data[id].Rank = strconv.Itoa(id)
-		data[id].Name = growth.Key
-		data[id].Money = strconv.FormatFloat(growth.Rate-1.0, 'f', 2, 64)
+		data[id] = &defs.FundRankData{
+			Rank:  strconv.Itoa(id),
+			Name:  growth.Key,
+			Money: strconv.FormatFloat(growth.Rate-1.0, 'f', 2, 64),
+		}
 	}
 	return &defs.FundRankResponse{
 		OrderType: orderType,
@@ -168,18 +175,22 @@ func getRate(dateVal map[string]int) float64 {
 		}
 	}
 	interval := maxTime.Year() - minTime.Year()
-	return float64(maxVal-minVal) / float64(interval)
+	return (float64(maxVal-minVal) / float64(interval)) / float64(minVal)
 }
 
 func treeTechParser(techAnalysis []*dbops.BasicAnalysisTechResult) *defs.TreeNodeResponse {
 	data := make([]*defs.TreeData, len(techAnalysis))
 	for id, div := range techAnalysis {
-		data[id].Key = div.Key
-		data[id].Title = div.Name
+		data[id] = &defs.TreeData{
+			Key:   div.Key,
+			Title: div.Name,
+		}
 		children := make([]*defs.TreeData, len(div.Techs))
 		for i, tech := range div.Techs {
-			children[i].Title = tech.Tech
-			children[i].Key = tech.Tech
+			children[i] = &defs.TreeData{
+				Title: tech.Tech,
+				Key:   tech.Tech,
+			}
 		}
 		data[id].Children = children
 	}
@@ -191,12 +202,16 @@ func treeTechParser(techAnalysis []*dbops.BasicAnalysisTechResult) *defs.TreeNod
 func treeInduParser(induAnalysis []*dbops.BasicAnalysisInduResult) *defs.TreeNodeResponse {
 	data := make([]*defs.TreeData, len(induAnalysis))
 	for id, div := range induAnalysis {
-		data[id].Key = div.Key
-		data[id].Title = div.Name
+		data[id] = &defs.TreeData{
+			Key:   div.Key,
+			Title: div.Name,
+		}
 		children := make([]*defs.TreeData, len(div.Indus))
 		for i, tech := range div.Indus {
-			children[i].Title = tech.Indu
-			children[i].Key = tech.Indu
+			children[i] = &defs.TreeData{
+				Title: tech.Indu,
+				Key:   tech.Indu,
+			}
 		}
 		data[id].Children = children
 	}
@@ -307,6 +322,11 @@ func GetSearch(c *gin.Context) {
 			dbSearch.IndustriesOp = element.Logic
 		case "Date":
 			dateRange := strings.Split(element.Query, " ")
+			if len(dateRange) < 2 {
+				dbSearch.DateFrom, _ = time.Parse("2006-01-02", "1976-01-01")
+				dbSearch.DateTo, _ = time.Parse("2006-01-02", "2076-01-01")
+				break
+			}
 			dbSearch.DateFrom, _ = time.Parse("2006-01-02", dateRange[0])
 			dbSearch.DateTo, _ = time.Parse("2006-01-02", dateRange[1])
 		}
@@ -333,7 +353,7 @@ func GetSearch(c *gin.Context) {
 			Title:  element.AwardTitle,
 			Amount: strconv.Itoa(element.AwardAmount),
 			UUID:   element.AwardID,
-			Start:  element.AwardEffecticeDate,
+			Start:  element.AwardEffectiveDate,
 			End:    element.AwardExpirationDate,
 		}
 		resp.Data[id] = bucket

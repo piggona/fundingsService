@@ -3,6 +3,7 @@ package dbops
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"strconv"
 	"time"
 
@@ -27,8 +28,8 @@ type BasicRankAmountResult struct {
 }
 
 type BasicRankAmountBodyElement struct {
-	Key       string `json:"key"`
-	InduValue map[string]float64
+	Key       string             `json:"key"`
+	InduValue map[string]float64 `json:"category_proportion"`
 }
 
 func GetBasicRankAmount(from, size int) ([]*BasicRankAmountResult, error) {
@@ -65,6 +66,7 @@ func GetBasicRankAmount(from, size int) ([]*BasicRankAmountResult, error) {
 		log.Error("json object encode error: %s", err)
 		return nil, err
 	}
+	fmt.Println(string(objStr))
 	err = json.Unmarshal(objStr, &bodyElement)
 	if err != nil {
 		log.Error("json string unmarshal to BasicAnalysisTechBodyElement error: %s", err)
@@ -88,8 +90,8 @@ type BasicRankGrowthResult struct {
 }
 
 type BasicRankGrowthBodyBucket struct {
-	KeyAsString string `json:"key_as_string"`
-	RateSum     map[string]float64
+	KeyAsString string             `json:"key_as_string"`
+	RateSum     map[string]float64 `json:"rate_sum"`
 }
 
 type AggYear struct {

@@ -2,8 +2,11 @@ package handlers
 
 import (
 	"fmt"
+	"math/rand"
 	"net/http"
 	"strconv"
+	"strings"
+	"time"
 
 	"github.com/piggona/fundingsView/api/defs"
 	"github.com/piggona/fundingsView/api/utils/log"
@@ -14,7 +17,7 @@ import (
 
 func GetDetail(c *gin.Context) {
 	uuid := c.Param("uuid")
-	resp, err := dbops.GetAwardIDDetail(uuid, "nsf_test")
+	resp, err := dbops.GetFundDetail(uuid)
 	if err != nil {
 		fmt.Errorf("Error get detail: %s", err)
 		return
@@ -306,6 +309,93 @@ func getOrgTree(orgVal *OrgTreeVal, depth int) *defs.LevelData {
 func GetSimilar(c *gin.Context) {
 	uuid := c.Param("uuid")
 	page, _ := strconv.Atoi(c.Param("page"))
-
+	fund, err := dbops.GetFundDetail(uuid)
+	if err != nil {
+		log.Error("dbops GetFundDetail error: %s", err)
+		sendErrorResponse(c, defs.ErrorDBError)
+		return
+	}
+	dbSearch := &dbops.SearchParams{
+		From: strconv.Itoa(page * 10),
+	}
+	orgs := []string{}
+	for _, element := range fund.Institution {
+		orgs = append(orgs, element.Name)
+	}
+	org := strings.Join(orgs, " ")
+	tech := strings.Join(fund.Technology, " ")
+	industries := strings.Join(fund.Industries, " ")
+	dbSearch.Organization = org
+	dbSearch.Technology = tech
+	dbSearch.Industries = industries
+	elements, err := dbops.GetMultiSearch(dbSearch)
+	if err != nil {
+		log.Error("multisearch error: %s", err)
+		sendErrorResponse(c, defs.ErrorResponse{
+			HTTPSc: http.StatusInternalServerError,
+			Error: defs.Err{
+				Error:     fmt.Sprintf("%s", err),
+				ErrorCode: elasticsearchError,
+			},
+		})
+		return
+	}
+	keywords_bucket := append(orgs, fund.Technology...)
+	keywords_bucket = append(keywords_bucket, fund.Industries...)
+	number := 10
+	if len(elements) < 10 {
+		number = len(elements)
+	}
+	data := make([]*defs.SimilarData, number)
+	for i := 0; i < number; i++ {
+		element := elements[i]
+		data[i] = &defs.SimilarData{
+			Title: element.AwardTitle,
+			UUID:  element.AwardID,
+		}
+		keywords := make([]string, 3)
+		ids := generateRandomNumber(0, len(keywords_bucket)-1, 3)
+		for i, id := range ids {
+			keywords[i] = keywords_bucket[id]
+		}
+		data[i].Keywords = keywords
+	}
+	sendNormalResponse(c, defs.NormalResp{
+		HttpSc: http.StatusOK,
+		Resp: &defs.SimilarDataResponse{
+			Data: data,
+		},
+	})
 	return
+}
+
+func generateRandomNumber(start int, end int, count int) []int {
+	//范围检查
+	if end < start || (end-start) < count {
+		return nil
+	}
+
+	//存放结果的slice
+	nums := make([]int, 0)
+	//随机数生成器，加入时间戳保证每次生成的随机数不一样
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	for len(nums) < count {
+		//生成随机数
+		num := r.Intn((end - start)) + start
+
+		//查重
+		exist := false
+		for _, v := range nums {
+			if v == num {
+				exist = true
+				break
+			}
+		}
+
+		if !exist {
+			nums = append(nums, num)
+		}
+	}
+
+	return nums
 }

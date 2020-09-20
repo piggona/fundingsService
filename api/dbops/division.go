@@ -124,6 +124,9 @@ func GetDivTechRank(division string) ([]*DivTechRankResult, error) {
 	}
 	result := make([]*DivTechRankResult, len(bodyElement))
 	for id, element := range bodyElement {
+		result[id] = &DivTechRankResult{
+			DateValue: map[string]int{},
+		}
 		ele := element
 		for _, buc := range ele.YearBucket.Buckets {
 			bucket := buc
@@ -166,7 +169,7 @@ func GetDivInduRank(division string) ([]*DivInduRankResult, error) {
 	params := map[string]string{
 		"division": division,
 	}
-	resp, err := ais.Request(ctx, searcher.NewTemplateSearchReq(divtechrank, params), INDEX)
+	resp, err := ais.Request(ctx, searcher.NewTemplateSearchReq(divindurank, params), INDEX)
 	if err != nil {
 		log.Error("searcher request error: %s", err)
 		return nil, err
@@ -193,6 +196,9 @@ func GetDivInduRank(division string) ([]*DivInduRankResult, error) {
 	}
 	result := make([]*DivInduRankResult, len(bodyElement))
 	for id, element := range bodyElement {
+		result[id] = &DivInduRankResult{
+			DateValue: map[string]int{},
+		}
 		ele := element
 		for _, buc := range ele.YearBucket.Buckets {
 			bucket := buc
@@ -262,6 +268,9 @@ func GetDivOrgRank(division string) ([]*DivOrgRankResult, error) {
 	}
 	result := make([]*DivOrgRankResult, len(bodyElement))
 	for id, element := range bodyElement {
+		result[id] = &DivOrgRankResult{
+			DateValue: map[string]int{},
+		}
 		ele := element
 		for _, buc := range ele.YearBucket.Buckets {
 			bucket := buc

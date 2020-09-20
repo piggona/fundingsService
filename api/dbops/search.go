@@ -12,11 +12,15 @@ import (
 	"github.com/piggona/fundingsView/api/utils/log"
 )
 
+const (
+	multisearch = "multisearchscore"
+)
+
 type FundElement struct {
 	Industries          []string            `json:"industries"`
 	Technology          []string            `json:"technology"`
 	Description         string              `json:"description"`
-	AwardEffecticeDate  string              `json:"award_effectice_date"`
+	AwardEffectiveDate  string              `json:"award_effective_date"`
 	AwardExpirationDate string              `json:"award_expiration_date"`
 	AwardID             string              `json:"award_id"`
 	Organization        []*Organization     `json:"organization"`
@@ -92,7 +96,7 @@ func GetMultiSearch(searchParams *SearchParams) ([]*FundElement, error) {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 	defer cancel()
-	templateId := basicrankamount
+	templateId := multisearch
 	params := ParamsParser(searchParams)
 	resp, err := ais.Request(ctx, searcher.NewTemplateSearchReq(templateId, params), INDEX)
 	if err != nil {
@@ -131,6 +135,8 @@ func ParamsParser(params *SearchParams) map[string]string {
 	result := make(map[string]string)
 	if _, err := strconv.Atoi(params.From); err != nil {
 		result["from"] = "0"
+	} else {
+		result["from"] = params.From
 	}
 	result["title"] = params.Title
 	result["description"] = params.Description

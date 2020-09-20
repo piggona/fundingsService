@@ -124,6 +124,9 @@ func GetTechOrgRank(technology string) ([]*TechOrgRankResult, error) {
 	}
 	result := make([]*TechOrgRankResult, len(bodyElement))
 	for id, element := range bodyElement {
+		result[id] = &TechOrgRankResult{
+			DateValue: map[string]int{},
+		}
 		ele := element
 		for _, buc := range ele.YearBucket.Buckets {
 			bucket := buc
@@ -171,7 +174,7 @@ func GetTechInduRank(technology string) ([]*TechInduRankResult, error) {
 		log.Error("searcher request error: %s", err)
 		return nil, err
 	}
-	obj, err := resp.Find(nil, "aggregations", "indu_list", "buckets")
+	obj, err := resp.Find(nil, "aggregations", "tech_list", "buckets")
 	if err != nil {
 		log.Error("resp find error: %s", err)
 		return nil, err
@@ -193,6 +196,9 @@ func GetTechInduRank(technology string) ([]*TechInduRankResult, error) {
 	}
 	result := make([]*TechInduRankResult, len(bodyElement))
 	for id, element := range bodyElement {
+		result[id] = &TechInduRankResult{
+			DateValue: map[string]int{},
+		}
 		ele := element
 		for _, buc := range ele.YearBucket.Buckets {
 			bucket := buc
@@ -250,7 +256,7 @@ func GetTechDivRank(technology string) ([]*TechDivRankResult, error) {
 		log.Error("searcher request error: %s", err)
 		return nil, err
 	}
-	obj, err := resp.Find(nil, "aggregations", "indu_list", "buckets")
+	obj, err := resp.Find(nil, "aggregations", "division_list", "buckets")
 	if err != nil {
 		log.Error("resp find error: %s", err)
 		return nil, err
@@ -272,6 +278,9 @@ func GetTechDivRank(technology string) ([]*TechDivRankResult, error) {
 	}
 	result := make([]*TechDivRankResult, len(bodyElement))
 	for id, element := range bodyElement {
+		result[id] = &TechDivRankResult{
+			DateValue: map[string]int{},
+		}
 		ele := element
 		for _, buc := range ele.DivisionName.Buckets[0].YearBucket.Buckets {
 			bucket := buc
