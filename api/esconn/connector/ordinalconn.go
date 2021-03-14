@@ -135,7 +135,7 @@ func NewOrdinalConn() (Conn, error) {
 		var err error
 		cfg := elasticsearch.Config{
 			Addresses: []string{
-				"http://10.103.240.121:9200/",
+				"http://9.135.8.235:9200/",
 				// "http://es03:9200",
 			},
 		}

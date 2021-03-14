@@ -175,6 +175,9 @@ func getRate(dateVal map[string]int) float64 {
 		}
 	}
 	interval := maxTime.Year() - minTime.Year()
+	if minVal == 0 || interval == 0 {
+		return 0
+	}
 	return (float64(maxVal-minVal) / float64(interval)) / float64(minVal)
 }
 
@@ -300,6 +303,17 @@ func GetSearch(c *gin.Context) {
 	}
 	dbSearch := &dbops.SearchParams{
 		From: strconv.Itoa(searchReq.From),
+	}
+	if len(searchReq.Array) == 1 && searchReq.Array[0].Query == "" {
+		resp := &defs.SearchResponse{
+			TotalResults: 0,
+			Data:         make([]*defs.SearchResultBucket, 0),
+		}
+		sendNormalResponse(c, defs.NormalResp{
+			HttpSc: http.StatusOK,
+			Resp:   resp,
+		})
+		return
 	}
 	for _, element := range searchReq.Array {
 		switch element.Attr {
