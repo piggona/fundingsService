@@ -1,7 +1,7 @@
 version: '2.2'
 services:
   es01:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0
+    image: elasticsearch:7.5.0
     container_name: es01
     environment:
       - node.name=es01
@@ -20,7 +20,7 @@ services:
     networks:
       - elastic
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.5.0
+    image: kibana:7.5.0
     container_name: kibana
     environment:
       ELASTICSEARCH_URL: http://es01:9200
@@ -51,8 +51,8 @@ services:
     image: wurstmeister/zookeeper
     container_name: zookeeper
     volumes:
-      - data01:/data
-      - data01:/datalog
+      - kafkavol:/data
+      - kafkavol:/datalog
     ports:
       - 2181:2181
     networks:
@@ -72,13 +72,15 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
     volumes:
       - /var/run/docker.sock:/var/run/docker/sock
-      - data01:/kafka
+      - kafkavol:/kafka
     networks:
       - elastic
 volumes:
     data01:
         driver: local
     mysqlvol:
+        driver: local
+    kafkavol:
         driver: local
 networks:
     elastic:

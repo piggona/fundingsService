@@ -10,7 +10,7 @@ POST nsf_data/_mapping
 
 DELETE nsf_bucket/
 
-PUT nsf_bucket/
+PUT nsf_data/
 {
   "settings": {
     "index": {
@@ -449,7 +449,7 @@ GET nsf_data/_search
     "amount_list": {
       "terms": {
         "field": "industries.keyword",
-        "size": 2147483647
+        "size": 1000
       },
       "aggs": {
         "category_proportion": {
@@ -465,6 +465,42 @@ GET nsf_data/_search
               }
             },
             "size": 10
+          }
+        }
+      }
+    }
+  }
+}
+
+POST _scripts/basicrankamount
+{
+  "script": {
+    "lang": "mustache",
+    "source": {
+      "from": "{{ from }}",
+      "size": "{{ size }}",
+      "aggs": {
+        "amount_list": {
+          "terms": {
+            "field": "industries.keyword",
+            "size": 1000
+          },
+          "aggs": {
+            "category_proportion": {
+              "sum": {
+                "field": "award_amount"
+              }
+            },
+            "r_bucket_sort":{
+              "bucket_sort": {
+                "sort": {
+                  "category_proportion": {
+                    "order": "desc"
+                  }
+                },
+                "size": 10
+              }
+            }
           }
         }
       }
@@ -511,7 +547,90 @@ GET nsf_data/_search
       }
     }
   }
-  
+}
+
+GET nsf_data/_search
+{
+  "size": 0,
+  "aggs": {
+    "rate_list": {
+      "terms": {
+        "field": "program_element.text.keyword",
+        "size": 1000
+      },
+      "aggs": {
+        "agg_year": {
+          "date_histogram": {
+            "field": "award_effective_date",
+            "interval": "year",
+            "format": "MM/dd/yyyy"
+          },
+          "aggs": {
+            "rate_sum": {
+              "sum": {
+                "field": "award_amount"
+              }
+            },
+            "r_bucket_sort": {
+              "bucket_sort": {
+                "sort": {
+                  "rate_sum": {
+                    "order": "desc"
+                  }
+                },
+                "size": 10
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+POST _scripts/basicrankgrowth
+{
+  "script": {
+    "lang": "mustache",
+    "source": {
+      "from": "{{ from }}",
+      "size": "{{ size }}",
+      "aggs": {
+        "rate_list": {
+          "terms": {
+            "field": "program_element.text.keyword",
+            "size": 1000
+          },
+          "aggs": {
+            "agg_year": {
+              "date_histogram": {
+                "field": "award_effective_date",
+                "interval": "year",
+                "format": "MM/dd/yyyy"
+              },
+              "aggs": {
+                "rate_sum": {
+                  "sum": {
+                    "field": "award_amount"
+                  }
+                },
+                "r_bucket_sort": {
+                  "bucket_sort": {
+                    "sort": {
+                      "rate_sum": {
+                        "order": "desc"
+                      }
+                    },
+                    "size": 10
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 # 主页元素-解析-技术
@@ -630,7 +749,7 @@ GET nsf_data/_search
     "hot_industry": {
       "terms": {
         "field": "industries.keyword",
-        "size": 2147483647
+        "size": 1000
       },
       "aggs": {
         "indu_sum": {
